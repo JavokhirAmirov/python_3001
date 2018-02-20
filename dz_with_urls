@@ -1,0 +1,10 @@
+file = open('urls', 'r')
+lines = {fileLine.strip() for fileLine in file}
+result = {}
+for line in lines:
+    splitted = line.split('://')
+    if splitted[0] not in result:
+        result[splitted[0]] = []
+    result[splitted[0]].append(splitted[1])
+
+print(result)
