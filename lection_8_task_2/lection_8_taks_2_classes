@@ -1,0 +1,65 @@
+class Orc:
+    def __init__(self, name):
+        self.name = name
+        self.health = 18
+        self.damage = 5
+        self.stamina = 14
+        self.isdead = False
+
+    def hit(self, target):
+        if self.stamina >= self.damage:
+            self.stamina -= self.damage
+            return target.damaged(self.damage)
+        else:
+            self.stamina -= self.damage
+            return target.damaged(self.damage * 0.5)
+
+    def damaged(self, damage):
+        if self.health > damage:
+            self.health -= damage
+            print('{0} recieved {1} damage; {2} health left'.format(self.name, damage, self.health))
+        else:
+            self.death()
+
+    def death(self):
+        self.health = 0
+        self.isdead = True
+        print('Target is dead')
+
+
+class Human:
+    def __init__(self, name):
+        self.name = name
+        self.health = 15
+        self.damage = 5
+        self.stamina = 18
+        self.isdead = False
+
+    def hit (self, target):
+        if self.stamina >= self.damage:
+            self.stamina -= self.damage
+            return target.damaged(self.damage)
+        else:
+            self.stamina -= self.damage
+            return target.damaged(self.damage * 0.5)
+
+
+    def damaged (self, damage):
+        if self.health > damage:
+            self.health -= damage
+            print('{0} recieved {1} damage; {2} health left'.format(self.name, damage, self.health))
+        else:
+            self.death()
+
+    def death(self):
+        self.health = 0
+        self.isdead = True
+        print('Target is dead')
+        
+Arthas = Human('Arthas')
+Thrall = Orc('Thrall')
+Arthas.hit(Thrall)
+
+
+
+
