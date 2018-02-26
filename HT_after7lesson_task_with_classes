@@ -1,0 +1,41 @@
+from datetime import datetime
+current_year = datetime.today().year
+class Car(object):
+    def __init__(self, brand):
+        self.brand = brand
+        self.color = 'red'
+        self.cost = '$20000'
+        self.year = 1999
+    def changes_of_cost_with_years(self, amortisation):
+        self.amortisation = amortisation
+        self.cost = (self.cost - amortisation)*(current_year - year)
+    def make_buyer_happier(self, buyer):
+        buyer.happiness(2)
+
+class Premium(Car):
+    def changes_of_cost_with_years(self, amortisation):
+        self.cost = self.cost**(current_year - year)
+
+class Buyer:
+    def __init__(self, name):
+        self.name = name
+
+    def add_car(self, car_obj):
+        car_obj.make_buyer_happier(self)
+
+    def happiness(self, status):
+        self.status = status
+        i = int(status)
+        if i in range(4, 6):
+            print('The owner is really happy')
+        elif i == 3:
+            print('it\'s ok')
+        elif i in range(1, 3):
+            print('Really? Is it a car?')
+
+
+new_car = Car('Mersedes')
+new_buyer = Buyer('Masha')
+new_buyer.add_car(new_car)
+new_car.make_buyer_happier(new_buyer)
+print(new_buyer.status)
