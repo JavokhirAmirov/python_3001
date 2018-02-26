@@ -4,7 +4,7 @@ class Car(object):
     def __init__(self, brand):
         self.brand = brand
         self.color = 'red'
-        self.cost = '$20000'
+        self.cost = 20000
         self.year = 1999
     def changes_of_cost_with_years(self, amortisation):
         self.amortisation = amortisation
