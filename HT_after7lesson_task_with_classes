@@ -6,22 +6,18 @@ class Car(object):
         self.color = 'red'
         self.cost = 20000
         self.year = 1999
-    def changes_of_cost_with_years(self, amortisation):
-        self.amortisation = amortisation
-        self.cost = (self.cost - amortisation)*(current_year - year)
+        
     def make_buyer_happier(self, buyer):
         buyer.happiness(2)
-
-class Premium(Car):
-    def changes_of_cost_with_years(self, amortisation):
-        self.cost = self.cost**(current_year - year)
 
 class Buyer:
     def __init__(self, name):
         self.name = name
+        self.car = None
 
     def add_car(self, car_obj):
-        car_obj.make_buyer_happier(self)
+        self.car = car_obj
+        self.car.make_buyer_happier(self)
 
     def happiness(self, status):
         self.status = status
@@ -39,3 +35,4 @@ new_buyer = Buyer('Masha')
 new_buyer.add_car(new_car)
 new_car.make_buyer_happier(new_buyer)
 print(new_buyer.status)
+
