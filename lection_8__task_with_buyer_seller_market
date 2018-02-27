@@ -1,0 +1,75 @@
+class Buyer:
+    def __init__(self, name, money=0.0):
+        self.name = name
+        self.money = money
+        self.goods = []
+
+    def buy(self, p_name, market):
+        price_list = sorted(market.listing[p_name], key=lambda k: k['Price'])
+        p_price = price_list[0].get('Price')
+        s_name = price_list[0].get('Seller')
+        if self.money < p_price:
+            print('Not enough money for {0}'.format(p_name))
+        else:
+            self.goods.append(p_name)
+            self.money -= p_price
+            market.purchase(self.name, p_name, s_name, p_price)
+
+
+class Seller:
+    def __init__(self, name, money=0.0):
+        self.name = name
+        self.money = money
+        self.goods = []
+
+    def sell(self, p_name, p_price, market):
+        if p_name not in self.goods:
+            print('You do not have {0}'.format(p_name))
+        else:
+            market.create_listing(self.name, p_name, p_price)
+
+    def selling_complete(self, p_name, price):
+        self.goods.remove(p_name)
+        self.money += price
+        pass
+
+    def add_goods(self, p_name):
+        self.goods.append(p_name)
+
+
+class Market:
+    def __init__(self, name):
+        self.name = name
+        self.listing = {}
+        self.log = []
+
+    def create_listing(self, s_name, p_name, p_price):
+        self.log.append('{0} just put {1} for {2}$'.format(s_name, p_name, p_price))
+        print('{0} just put {1} for {2}$'.format(s_name, p_name, p_price))
+        temp_dict = {'Seller': s_name, 'Price': p_price}
+        temp_list = [temp_dict]
+        if p_name not in self.listing:
+            self.listing[p_name] = temp_list
+        else:
+            self.listing.get(p_name).append({'Seller': s_name, 'Price': p_price})
+
+    def purchase(self, b_name, p_name, s_name, price):
+        self.log.append('{0} just bought {1} from {2} for {3}$'.format(b_name, p_name, s_name, price))
+        print('{0} just bought {1} from {2} for {3}$'.format(b_name, p_name, s_name, price))
+        s_name.selling_complete(p_name, price)
+        for i in self.listing[p_name]:
+            if s_name in i.values():
+                i.pop('Seller')
+                i.pop('Price')
+
+Vasya = Seller('Vasya',10000)
+Bazar = Market('Bazar')
+Vasya.add_goods('Mazda323')
+Vasya.sell('Mazda323', 55000, Bazar)
+Vasya.add_goods('Mazda444')
+Vasya.sell('Mazda444', 15000, Bazar)
+Petya = Seller('Petya', 0)
+Petya.add_goods('Mazda323')
+Petya.sell('Mazda323', 44444, Bazar)
+Kolya = Buyer('Kolya', 100000)
+Kolya.buy('Mazda323', Bazar)
