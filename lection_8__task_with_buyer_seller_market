@@ -1,4 +1,4 @@
-class Buyer:
+class Trader:
     def __init__(self, name, money=0.0):
         self.name = name
         self.money = money
@@ -14,13 +14,6 @@ class Buyer:
             self.goods.append(p_name)
             self.money -= p_price
             market.purchase(self.name, p_name, s_name, p_price)
-
-
-class Seller:
-    def __init__(self, name, money=0.0):
-        self.name = name
-        self.money = money
-        self.goods = []
 
     def sell(self, p_name, p_price, market):
         if p_name not in self.goods:
@@ -62,14 +55,18 @@ class Market:
                 i.pop('Seller')
                 i.pop('Price')
 
-Vasya = Seller('Vasya',10000)
+
+
+
+
+Vasya = Trader('Vasya',10000)
 Bazar = Market('Bazar')
 Vasya.add_goods('Mazda323')
 Vasya.sell('Mazda323', 55000, Bazar)
 Vasya.add_goods('Mazda444')
 Vasya.sell('Mazda444', 15000, Bazar)
-Petya = Seller('Petya', 0)
+Petya = Trader('Petya')
 Petya.add_goods('Mazda323')
 Petya.sell('Mazda323', 44444, Bazar)
-Kolya = Buyer('Kolya', 100000)
+Kolya = Trader('Kolya', 100000)
 Kolya.buy('Mazda323', Bazar)
