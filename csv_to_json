@@ -1,0 +1,26 @@
+import csv
+import json
+from datetime import datetime
+
+
+def export(file_name):
+    rows, date = export_impl(file_name)
+    json_dict = {'date_key': str(date)}
+    for row in rows:
+        for i, element in enumerate(row):  # берем индекс в массиве
+            if i == 0:
+                json_dict[element] = []
+            else:
+                json_dict[row[0]].append(element)
+
+    return json.dumps(json_dict)
+
+
+def export_impl(file_name):
+    with open(file_name, encoding='utf-8', errors='ignore') as csvfile:
+        reader = csv.reader(csvfile)
+        return list(reader), datetime.now()
+
+
+json_str = export('./123.csv')
+print(json_str)
