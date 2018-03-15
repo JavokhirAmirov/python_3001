@@ -1,0 +1,32 @@
+import re
+from tkinter import *
+from tkinter import filedialog
+from tkinter import messagebox
+
+
+def read_file():
+    file = filedialog.askopenfile(parent=top, title='Choose a file')
+    input_text = file.read()
+    show_result(input_text)
+
+
+def find_words(word_to_find, input_text):
+    r = re.compile(r'{0}'.format(word_to_find))
+    a = r.findall(input_text)
+    return len(a), word_to_find
+
+
+def show_result(input_text):
+    a, b = find_words(text.get(), input_text)
+    messagebox.showinfo("Успешно", 'Найдено {0} повторений {1}'.format(a, b))
+
+
+top = Tk()
+top.title('Find count of words in text')
+text = StringVar()
+text_entry = Entry(textvariable=text)
+text_entry.place(x=10, y=10)
+text_button = Button(text='Search word in a file', command=read_file)
+text_button.place(x=10, y=35)
+top.mainloop()
+
